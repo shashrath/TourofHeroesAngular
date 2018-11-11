@@ -33,6 +33,11 @@ export class HeroesService {
     };
   }
 
+  searchHero(term: string): Observable<Hero[]>{
+    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`,httpOptions).
+    pipe(catchError(this.handleError<Hero[]>('searchHero')));
+  }
+  
   addHero(name: string):Observable<Hero>{
    return this.http.post<Hero>(this.heroesUrl, {name} as Hero,httpOptions)
     .pipe(tap(_ => this.log(`Added hero with name ${name}`)),catchError(this.handleError<Hero>('addHero')));
