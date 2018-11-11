@@ -38,6 +38,11 @@ export class HeroesService {
     .pipe(tap(_ => this.log(`Added hero with name ${name}`)),catchError(this.handleError<Hero>('addHero')));
   }
 
+  deleteHero(hero: Hero): Observable<any>{
+    return this.http.delete(`${this.heroesUrl}/${hero.id}`,httpOptions)
+    .pipe(tap(_ => this.log(`Deleted Hero with id ${hero.id}`)),catchError(this.handleError<Hero>('DeleteHero')))
+  }
+
   updateHeroes(hero: Hero): Observable<any>{
     return this.http.put(this.heroesUrl,hero,httpOptions)
     .pipe(tap(_=>this.log(`Updated Hero with id ${hero.id}`)),catchError(this.handleError<any>('updateHeroes')))
